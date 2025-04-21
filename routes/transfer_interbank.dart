@@ -3,13 +3,22 @@ import 'dart:io';
 
 import 'package:dart_frog/dart_frog.dart';
 import 'package:my_project/access-token.dart';
+import 'package:my_project/const.dart';
 import 'package:my_project/generator/asymmetric-generator.dart';
+import 'package:my_project/generator/symmetric-generator.dart';
+import 'package:my_project/transfer-interbank.dart';
 import 'package:timezone/data/latest.dart' as tzdata;
 import 'package:timezone/timezone.dart' as tz;
 
 import 'asymmetric_generator.dart';
 
 Future<Response> onRequest(RequestContext context) async {
+  if (context.request.method != HttpMethod.post) {
+    return Response(statusCode: 405, body: 'Method Not Allowed');
+  }
+
+  // return Response(body: await context.request.body());
+
   tzdata.initializeTimeZones();
   final bangkok = tz.getLocation('Asia/Bangkok');
   final now = tz.TZDateTime.now(bangkok);
@@ -24,14 +33,30 @@ Future<Response> onRequest(RequestContext context) async {
     );
   }
 
-  final xSignature = await generateAsymmetric(timestamp, keyFile);
+  final xAsymmetric = await generateAsymmetric(timestamp, keyFile);
 
   try {
     // Send POST request
-    final response = await accessToken(timestamp, xSignature);
+    final responseToken = await accessToken(timestamp, xAsymmetric);
 
-    final data = jsonDecode(response);
-    return Response.json(body: data);
+    final data = jsonDecode(responseToken);
+    final requestBody = await context.request.body();
+
+    final xSymmetric = await generateSymmetric(
+      context.request.method.toString(),
+      data['accessToken'].toString(),
+      requestBody,
+      timestamp,
+      CLIENT_SECRET,
+    );
+
+    final response = await transferInterbank(
+        timestamp,
+        xSymmetric,
+        data['accessToken'].toString(),
+        requestBody,);
+
+    return Response.json(body: response);
   } catch (e) {
     return Response.json(
       statusCode: 500,
