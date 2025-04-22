@@ -4,7 +4,7 @@ import 'package:dart_frog/dart_frog.dart';
 import 'package:http/http.dart' as http;
 import 'package:my_project/const.dart';
 
-Future<String> accessToken(String timestamp, String xSignature) async {
+Future<String> getAccessToken(String timestamp, String xSignature) async {
   // External API URL
   final url = Uri.parse(
     API_ACCESS_TOKEN,

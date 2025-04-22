@@ -28,7 +28,7 @@ Future<Response> onRequest(RequestContext context) async {
 
   try {
     // Send POST request
-    final response = await accessToken(timestamp, xSignature);
+    final response = await getAccessToken(timestamp, xSignature);
 
     final data = jsonDecode(response);
     return Response.json(body: data);

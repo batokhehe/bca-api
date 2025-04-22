@@ -21,6 +21,7 @@ Future<String> generateSymmetric(String httpMethod, String accessToken,
     timestamp,
   ].join(':');
 
+  print(stringToSign);
   // Step 4: Generate HMAC-SHA512 signature
   final hmacSha512 = Hmac(sha512, utf8.encode(clientSecret));
   final signatureBytes = hmacSha512.convert(utf8.encode(stringToSign)).bytes;

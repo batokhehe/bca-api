@@ -37,24 +37,26 @@ Future<Response> onRequest(RequestContext context) async {
 
   try {
     // Send POST request
-    final responseToken = await accessToken(timestamp, xAsymmetric);
+    final responseToken = await getAccessToken(timestamp, xAsymmetric);
 
     final data = jsonDecode(responseToken);
     final requestBody = await context.request.body();
+    final accessToken = data['accessToken'].toString();
 
     final xSymmetric = await generateSymmetric(
-      context.request.method.toString(),
-      data['accessToken'].toString(),
+      HTTP_METHOD_POST,
+      accessToken,
       requestBody,
       timestamp,
       CLIENT_SECRET,
     );
 
     final response = await transferInterbank(
-        timestamp,
-        xSymmetric,
-        data['accessToken'].toString(),
-        requestBody,);
+      timestamp,
+      xSymmetric,
+      accessToken,
+      requestBody,
+    );
 
     return Response.json(body: response);
   } catch (e) {
