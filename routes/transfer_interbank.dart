@@ -24,6 +24,8 @@ Future<Response> onRequest(RequestContext context) async {
   final now = tz.TZDateTime.now(bangkok);
   final timestamp = formatTimestamp(now);
 
+  print(timestamp);
+
   const keyPath = 'certs/private_key.pem'; // Adjust if needed
   final keyFile = File(keyPath);
   if (!await keyFile.exists()) {
