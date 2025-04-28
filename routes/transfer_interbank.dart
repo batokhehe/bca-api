@@ -21,13 +21,8 @@ Future<Response> onRequest(RequestContext context) async {
 
   tzdata.initializeTimeZones();
   final bangkok = tz.getLocation('Asia/Bangkok');
-  final now = tz.TZDateTime.now(bangkok);
+  final now = tz.TZDateTime.now(bangkok).add(const Duration(hours: 7));
   final timestamp = formatTimestamp(now);
-
-  return Response.json(
-    statusCode: 500,
-    body: {'error': timestamp},
-  );
 
   const keyPath = 'certs/private_key.pem'; // Adjust if needed
   final keyFile = File(keyPath);

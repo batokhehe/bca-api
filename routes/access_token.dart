@@ -12,7 +12,7 @@ import 'asymmetric_generator.dart';
 Future<Response> onRequest(RequestContext context) async {
   tzdata.initializeTimeZones();
   final bangkok = tz.getLocation('Asia/Bangkok');
-  final now = tz.TZDateTime.now(bangkok);
+  final now = tz.TZDateTime.now(bangkok).add(const Duration(hours: 7));
   final timestamp = formatTimestamp(now);
 
   return Response.json(
