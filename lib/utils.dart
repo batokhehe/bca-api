@@ -1,3 +1,4 @@
+import 'package:timezone/data/latest.dart' as tzdata;
 import 'package:timezone/timezone.dart' as tz;
 
 String formatTimestamp(tz.TZDateTime dt) {
@@ -14,4 +15,11 @@ String formatTimestamp(tz.TZDateTime dt) {
   final minutes = (offset.inMinutes.abs() % 60).toString().padLeft(2, '0');
 
   return '$y-$m-${d}T$h:$min:$s$sign$hours:$minutes';
+}
+
+String getTimestamp(){
+  tzdata.initializeTimeZones();
+  final bangkok = tz.getLocation('Asia/Bangkok');
+  final now = tz.TZDateTime.now(bangkok); //.add(const Duration(hours: 7));
+  return formatTimestamp(now);
 }

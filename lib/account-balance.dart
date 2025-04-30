@@ -3,11 +3,15 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:my_project/const.dart';
 
-Future transferInterbank(String timestamp, String xSignature,
-    String accessToken, String params,) async {
+Future accountBalance(
+  String timestamp,
+  String xSignature,
+  String accessToken,
+  String params,
+) async {
   // External API URL
   final url = Uri.parse(
-    API_TRANSFER_INTERBANK,
+    API_ACCOUNT_BALANCE,
   );
 
   final jsonRequestBody = jsonDecode(params);
@@ -25,7 +29,8 @@ Future transferInterbank(String timestamp, String xSignature,
   final requestBody = jsonEncode(jsonRequestBody);
 
   // Send POST request
-  final response = await http.post(url, headers: requestHeader, body: requestBody);
+  final response =
+      await http.post(url, headers: requestHeader, body: requestBody);
 
   print(url);
   print(requestHeader);

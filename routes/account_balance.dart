@@ -3,10 +3,10 @@ import 'dart:io';
 
 import 'package:dart_frog/dart_frog.dart';
 import 'package:my_project/access-token.dart';
+import 'package:my_project/account-balance.dart';
 import 'package:my_project/const.dart';
 import 'package:my_project/generator/asymmetric-generator.dart';
 import 'package:my_project/generator/symmetric-generator.dart';
-import 'package:my_project/transfer-interbank.dart';
 import 'package:my_project/utils.dart';
 import 'package:timezone/data/latest.dart' as tzdata;
 import 'package:timezone/timezone.dart' as tz;
@@ -39,16 +39,18 @@ Future<Response> onRequest(RequestContext context) async {
     final requestBody = await context.request.body();
     final accessToken = data['accessToken'].toString();
 
+    print(data);
+
     final xSymmetric = await generateSymmetric(
       HTTP_METHOD_POST,
       accessToken,
       requestBody,
       timestamp,
       CLIENT_SECRET,
-      ENDPOINT_TRANSFER_INTERBANK,
+      ENDPOINT_TRANSFER_ACCOUNT_BALANCE,
     );
 
-    final response = await transferInterbank(
+    final response = await accountBalance(
       timestamp,
       xSymmetric,
       accessToken,

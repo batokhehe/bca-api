@@ -4,7 +4,7 @@ import 'package:crypto/crypto.dart';
 import 'package:my_project/const.dart';
 
 Future<String> generateSymmetric(String httpMethod, String accessToken,
-    String requestBody, String timestamp, String clientSecret,) async {
+    String requestBody, String timestamp, String clientSecret, String endpoint) async {
   // Step 1: Minify JSON request body
   final decodedBody = json.decode(requestBody);
   final minifiedJson = json.encode(decodedBody);
@@ -15,7 +15,7 @@ Future<String> generateSymmetric(String httpMethod, String accessToken,
   // Step 3: Construct StringToSign
   final stringToSign = [
     httpMethod.toUpperCase(),
-    ENDPOINT_TRANSFER_INTERBANK,
+    endpoint,
     accessToken,
     hashedBody,
     timestamp,

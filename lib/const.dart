@@ -8,5 +8,7 @@ const String HTTP_METHOD_POST = 'POST';
 
 const String API_ACCESS_TOKEN = '$API_BASE_URL/openapi/v1.0/access-token/b2b';
 const String ENDPOINT_TRANSFER_INTERBANK = '/openapi/v2.0/transfer-interbank';
+const String ENDPOINT_TRANSFER_ACCOUNT_BALANCE = '/openapi/v1.0/balance-inquiry';
 const String API_TRANSFER_INTERBANK = '$API_BASE_URL$ENDPOINT_TRANSFER_INTERBANK';
+const String API_ACCOUNT_BALANCE = '$API_BASE_URL$ENDPOINT_TRANSFER_ACCOUNT_BALANCE';
 
