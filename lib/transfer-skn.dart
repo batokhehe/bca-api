@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:my_project/const.dart';
 
-Future accountBalance(
+Future transferSkn(
   String timestamp,
   String xSignature,
   String accessToken,
@@ -11,7 +11,7 @@ Future accountBalance(
 ) async {
   // External API URL
   final url = Uri.parse(
-    API_ACCOUNT_BALANCE,
+    API_TRANSFER_SKN,
   );
 
   final requestHeader = {

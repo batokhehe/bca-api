@@ -3,10 +3,10 @@ import 'dart:io';
 
 import 'package:dart_frog/dart_frog.dart';
 import 'package:my_project/access-token.dart';
-import 'package:my_project/account-balance.dart';
 import 'package:my_project/const.dart';
 import 'package:my_project/generator/asymmetric-generator.dart';
 import 'package:my_project/generator/symmetric-generator.dart';
+import 'package:my_project/transfer-rtgs.dart';
 import 'package:my_project/utils.dart';
 
 Future<Response> onRequest(RequestContext context) async {
@@ -38,18 +38,16 @@ Future<Response> onRequest(RequestContext context) async {
     requestBody['partnerReferenceNo'] = getPartnerReferenceNo();
     requestBody['transactionDate'] = timestamp;
 
-    print(data);
-
     final xSymmetric = await generateSymmetric(
       HTTP_METHOD_POST,
       accessToken,
       requestBody,
       timestamp,
       CLIENT_SECRET,
-      ENDPOINT_TRANSFER_ACCOUNT_BALANCE,
+      ENDPOINT_TRANSFER_RTGS,
     );
 
-    final response = await accountBalance(
+    final response = await transferRtgs(
       timestamp,
       xSymmetric,
       accessToken,

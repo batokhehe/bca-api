@@ -1,13 +1,16 @@
 import 'dart:convert';
 
 import 'package:crypto/crypto.dart';
-import 'package:my_project/const.dart';
 
-Future<String> generateSymmetric(String httpMethod, String accessToken,
-    String requestBody, String timestamp, String clientSecret, String endpoint) async {
+Future<String> generateSymmetric(
+    String httpMethod,
+    String accessToken,
+    dynamic requestBody,
+    String timestamp,
+    String clientSecret,
+    String endpoint) async {
   // Step 1: Minify JSON request body
-  final decodedBody = json.decode(requestBody);
-  final minifiedJson = json.encode(decodedBody);
+  final minifiedJson = json.encode(requestBody);
 
   // Step 2: SHA-256 Hash (hex, lowercase)
   final hashedBody = sha256.convert(utf8.encode(minifiedJson)).toString();

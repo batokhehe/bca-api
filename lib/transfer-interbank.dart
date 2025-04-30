@@ -3,14 +3,16 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:my_project/const.dart';
 
-Future transferInterbank(String timestamp, String xSignature,
-    String accessToken, String params,) async {
+Future transferInterbank(
+  String timestamp,
+  String xSignature,
+  String accessToken,
+  dynamic params,
+) async {
   // External API URL
   final url = Uri.parse(
     API_TRANSFER_INTERBANK,
   );
-
-  final jsonRequestBody = jsonDecode(params);
 
   final requestHeader = {
     'Content-Type': 'application/json',
@@ -19,13 +21,14 @@ Future transferInterbank(String timestamp, String xSignature,
     'X-SIGNATURE': xSignature,
     'CHANNEL-ID': CHANNEL_ID,
     'X-PARTNER-ID': PARTNER_ID,
-    'X-EXTERNAL-ID': jsonRequestBody['partnerReferenceNo'].toString(),
+    'X-EXTERNAL-ID': params['partnerReferenceNo'].toString(),
   };
 
-  final requestBody = jsonEncode(jsonRequestBody);
+  final requestBody = jsonEncode(params);
 
   // Send POST request
-  final response = await http.post(url, headers: requestHeader, body: requestBody);
+  final response =
+      await http.post(url, headers: requestHeader, body: requestBody);
 
   print(url);
   print(requestHeader);

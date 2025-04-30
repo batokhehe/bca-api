@@ -8,10 +8,6 @@ import 'package:my_project/generator/asymmetric-generator.dart';
 import 'package:my_project/generator/symmetric-generator.dart';
 import 'package:my_project/transfer-interbank.dart';
 import 'package:my_project/utils.dart';
-import 'package:timezone/data/latest.dart' as tzdata;
-import 'package:timezone/timezone.dart' as tz;
-
-import 'asymmetric_generator.dart';
 
 Future<Response> onRequest(RequestContext context) async {
   if (context.request.method != HttpMethod.post) {
@@ -36,8 +32,11 @@ Future<Response> onRequest(RequestContext context) async {
     final responseToken = await getAccessToken(timestamp, xAsymmetric);
 
     final data = jsonDecode(responseToken);
-    final requestBody = await context.request.body();
+    final requestBody = jsonDecode(await context.request.body());
     final accessToken = data['accessToken'].toString();
+
+    requestBody['partnerReferenceNo'] = getPartnerReferenceNo();
+    requestBody['transactionDate'] = timestamp;
 
     final xSymmetric = await generateSymmetric(
       HTTP_METHOD_POST,

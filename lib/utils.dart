@@ -17,9 +17,14 @@ String formatTimestamp(tz.TZDateTime dt) {
   return '$y-$m-${d}T$h:$min:$s$sign$hours:$minutes';
 }
 
-String getTimestamp(){
+String getTimestamp() {
   tzdata.initializeTimeZones();
   final bangkok = tz.getLocation('Asia/Bangkok');
   final now = tz.TZDateTime.now(bangkok); //.add(const Duration(hours: 7));
   return formatTimestamp(now);
+}
+
+String getPartnerReferenceNo() {
+  int uniqueNumber = DateTime.now().millisecondsSinceEpoch;
+  return uniqueNumber.toString();
 }
