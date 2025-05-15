@@ -20,7 +20,7 @@ String formatTimestamp(tz.TZDateTime dt) {
 String getTimestamp() {
   tzdata.initializeTimeZones();
   final bangkok = tz.getLocation('Asia/Bangkok');
-  final now = tz.TZDateTime.now(bangkok); //.add(const Duration(hours: 7));
+  final now = tz.TZDateTime.now(bangkok).add(const Duration(hours: 7));
   return formatTimestamp(now);
 }
 
