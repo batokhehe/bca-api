@@ -11,6 +11,8 @@ dependencies:
   dart_frog: ^1.2.0
   timezone: ^0.10.0
   http: ^1.3.0
+  logger: ^2.0.2  # or the latest version
+  path: ^1.8.3
 
 dev_dependencies:
   mocktail: ^1.0.4

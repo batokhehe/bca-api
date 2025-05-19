@@ -30,9 +30,5 @@ Future transferInterbank(
   final response =
       await http.post(url, headers: requestHeader, body: requestBody);
 
-  print(url);
-  print(requestHeader);
-  print(requestBody);
-
   return jsonDecode(response.body);
 }

@@ -38,8 +38,6 @@ Future<Response> onRequest(RequestContext context) async {
     requestBody['partnerReferenceNo'] = getPartnerReferenceNo();
     requestBody['transactionDate'] = timestamp;
 
-    print(data);
-
     final xSymmetric = await generateSymmetric(
       HTTP_METHOD_POST,
       accessToken,
