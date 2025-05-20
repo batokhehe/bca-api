@@ -1,5 +1,10 @@
+import 'dart:io';
+
 import 'package:logger/logger.dart';
 import 'package:my_project/logger/file_log_output.dart';
+import 'package:path/path.dart' as p;
+
+final logDir = p.join(Directory.current.path, 'logs');
 
 final logger = Logger(
   printer: PrettyPrinter(
@@ -11,5 +16,5 @@ final logger = Logger(
     printEmojis: false,
     dateTimeFormat: DateTimeFormat.onlyTimeAndSinceStart,
   ),
-  output: FileLogOutput('logs'), // <-- stores in ./logs/
+  output: FileLogOutput(logDir), // <-- stores in ./logs/
 );
