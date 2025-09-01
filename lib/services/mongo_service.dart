@@ -1,13 +1,13 @@
 import 'package:mongo_dart/mongo_dart.dart';
 
 class MongoService {
+
+  MongoService._internal(this.uri);
   final String uri;
   static MongoService? _instance;
   Db? _db;
   DbCollection? logs;
   bool _isConnected = false;
-
-  MongoService._internal(this.uri);
 
   static MongoService getInstance(String uri) {
     _instance ??= MongoService._internal(uri);
